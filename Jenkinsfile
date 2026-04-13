@@ -14,6 +14,11 @@ pipeline{
             }
         
         }
+        stage('Install DVC'){
+            steps{
+                sh 'pip install dvc dvc[s3]'
+            }
+        }
         stage('Install Dependencies'){
             steps{
                 sh '''
@@ -21,6 +26,11 @@ pipeline{
                 . venv/bin/activate
                 pip install -r requirements.txt
                 '''
+            }
+        }
+        stage('Pull Data with DVC'){
+            steps{
+                sh 'dvc pull'
             }
         }
         stage('Train Model'){
